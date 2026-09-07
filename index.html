@@ -1,797 +1,808 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
-
-    <title>Support</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            overscroll-behavior: none;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #07070b;
-            color: #ffffff;
-        }
-
-        body {
-            position: fixed;
-            inset: 0;
-        }
-
-        /* Background */
-        .background {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
-            background:
-                radial-gradient(
-                    circle at 15% 15%,
-                    rgba(128, 64, 255, 0.22),
-                    transparent 32%
-                ),
-                radial-gradient(
-                    circle at 85% 80%,
-                    rgba(0, 255, 153, 0.14),
-                    transparent 30%
-                ),
-                #07070b;
-        }
-
-        .glow {
-            position: absolute;
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.25;
-        }
-
-        .glow.one {
-            top: -120px;
-            left: -80px;
-            background: #7c3cff;
-        }
-
-        .glow.two {
-            right: -120px;
-            bottom: -100px;
-            background: #00e58b;
-        }
-
-        /* Main fixed viewport */
-        .viewport {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            justify-content: center;
-            overflow: hidden;
-            padding: 18px;
-        }
-
-        /* Internal scrolling area */
-        .scroll-area {
-            width: 100%;
-            max-width: 520px;
-            height: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
-
-            overscroll-behavior: contain;
-            -webkit-overflow-scrolling: touch;
-
-            padding: 5px 8px 25px 5px;
-
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,0.35)
-                             rgba(255,255,255,0.06);
-        }
-
-        /* Chrome / Android WebView scrollbar */
-        .scroll-area::-webkit-scrollbar {
-            width: 7px;
-            height: 7px;
-        }
-
-        .scroll-area::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.06);
-            border-radius: 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Support</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #07070b;
+    color: #fff;
+}
+
+body {
+    position: fixed;
+    inset: 0;
+}
+
+/* Background */
+.background {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(128, 64, 255, 0.22),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(0, 255, 153, 0.14),
+            transparent 30%
+        ),
+        #07070b;
+}
+
+.glow {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.25;
+}
+
+.glow.one {
+    top: -120px;
+    left: -80px;
+    background: #7c3cff;
+}
+
+.glow.two {
+    right: -120px;
+    bottom: -100px;
+    background: #00e58b;
+}
+
+/* Fixed viewport */
+.viewport {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+
+    overflow: hidden;
+
+    padding: 18px;
+}
+
+/* Internal scroll area */
+.scroll-area {
+    width: 100%;
+    max-width: 520px;
+    height: 100%;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+
+    padding: 5px 8px 25px 5px;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(255,255,255,0.35)
+        rgba(255,255,255,0.06);
+}
 
-        .scroll-area::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.35);
-            border-radius: 20px;
-        }
+/* Android / Chrome scrollbar */
+.scroll-area::-webkit-scrollbar {
+    width: 7px;
+}
 
-        .scroll-area::-webkit-scrollbar-thumb:hover {
-            background: rgba(255,255,255,0.5);
-        }
-
-        /* Card */
-        .support-card {
-            position: relative;
-            width: 100%;
-            margin: 0 auto;
-
-            padding: 32px 25px 28px;
-
-            border: 1px solid rgba(255,255,255,0.10);
-            border-radius: 30px;
-
-            background: rgba(20, 20, 28, 0.82);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-
-            box-shadow:
-                0 25px 80px rgba(0,0,0,0.45),
-                inset 0 1px 0 rgba(255,255,255,0.05);
-        }
-
-        /* Header */
-        .top {
-            text-align: center;
-        }
-
-        .support-icon {
-            width: 76px;
-            height: 76px;
-            margin: 0 auto 20px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 24px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(139,92,246,0.28),
-                    rgba(0,229,139,0.12)
-                );
-
-            border: 1px solid rgba(255,255,255,0.09);
-
-            font-size: 35px;
-
-            box-shadow:
-                0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 8px 13px;
-
-            border-radius: 50px;
-
-            font-size: 12px;
-            font-weight: 600;
-
-            color: #baffdf;
-
-            background: rgba(0, 229, 139, 0.09);
-            border: 1px solid rgba(0,229,139,0.15);
-        }
-
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #00e58b;
-            box-shadow: 0 0 10px rgba(0,229,139,0.8);
-        }
-
-        h1 {
-            margin-top: 18px;
-
-            font-size: clamp(28px, 8vw, 38px);
-            line-height: 1.1;
-            letter-spacing: -1.3px;
-        }
-
-        .subtitle {
-            margin: 13px auto 0;
-
-            max-width: 390px;
-
-            color: #a6a6b3;
-            font-size: 15px;
-            line-height: 1.65;
-        }
-
-        /* Divider */
-        .divider {
-            height: 1px;
-            margin: 28px 0;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    rgba(255,255,255,0.12),
-                    transparent
-                );
-        }
-
-        /* Support box */
-        .support-box {
-            padding: 22px;
-
-            border-radius: 22px;
-
-            background: rgba(255,255,255,0.035);
-            border: 1px solid rgba(255,255,255,0.075);
-        }
-
-        .label {
-            margin-bottom: 12px;
-
-            color: #8f8f9c;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.1px;
-        }
-
-        /* Number */
-        .number-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .phone-number {
-            flex: 1;
-
-            color: #ffffff;
-            font-size: clamp(20px, 6vw, 27px);
-            font-weight: 700;
-            letter-spacing: 0.3px;
-
-            cursor: pointer;
-            user-select: none;
-            -webkit-user-select: none;
-
-            transition: opacity 0.2s ease;
-        }
-
-        .phone-number:active {
-            opacity: 0.55;
-        }
-
-        /* Copy icon */
-        .copy-button {
-            flex-shrink: 0;
-
-            width: 44px;
-            height: 44px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border: 1px solid rgba(255,255,255,0.10);
-            border-radius: 14px;
-
-            background: rgba(255,255,255,0.055);
-
-            color: #ffffff;
-            cursor: pointer;
-
-            font-size: 19px;
-
-            transition:
-                transform 0.18s ease,
-                background 0.18s ease;
-        }
-
-        .copy-button:active {
-            transform: scale(0.92);
-        }
-
-        .copy-button.copied {
-            background: rgba(0,229,139,0.13);
-            border-color: rgba(0,229,139,0.25);
-        }
-
-        .copy-message {
-            min-height: 18px;
-            margin-top: 9px;
-
-            color: #00e58b;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        /* WhatsApp action */
-        .whatsapp-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 9px;
-
-            width: 100%;
-            margin-top: 17px;
-            padding: 14px 16px;
+.scroll-area::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.06);
+    border-radius: 20px;
+}
 
-            border-radius: 16px;
+.scroll-area::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.35);
+    border-radius: 20px;
+}
 
-            color: #8dffcb;
-            text-decoration: none;
+/* Main card */
+.support-card {
+    width: 100%;
 
-            background: rgba(0,229,139,0.055);
-            border: 1px solid rgba(0,229,139,0.13);
+    padding: 32px 25px 28px;
 
-            font-size: 14px;
-            font-weight: 700;
+    border-radius: 30px;
 
-            transition:
-                background 0.2s ease,
-                transform 0.2s ease;
-        }
+    border: 1px solid rgba(255,255,255,0.10);
 
-        .whatsapp-link:active {
-            transform: scale(0.98);
-            background: rgba(0,229,139,0.11);
-        }
+    background: rgba(20,20,28,0.82);
 
-        .whatsapp-icon {
-            width: 20px;
-            height: 20px;
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    box-shadow:
+        0 25px 80px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+}
 
-            border-radius: 50%;
+/* Header */
+.top {
+    text-align: center;
+}
 
-            background: #00e58b;
-            color: #07130e;
+.support-icon {
+    width: 76px;
+    height: 76px;
 
-            font-size: 12px;
-            font-weight: 900;
-        }
+    margin: 0 auto 20px;
 
-        /* Info cards */
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 11px;
-            margin-top: 18px;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        .info-item {
-            padding: 16px;
+    border-radius: 24px;
 
-            border-radius: 18px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(139,92,246,0.28),
+            rgba(0,229,139,0.12)
+        );
 
-            background: rgba(255,255,255,0.025);
-            border: 1px solid rgba(255,255,255,0.055);
-        }
+    border: 1px solid rgba(255,255,255,0.09);
 
-        .info-title {
-            margin-bottom: 5px;
+    font-size: 35px;
 
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 700;
-        }
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.3);
+}
 
-        .info-text {
-            color: #858591;
-            font-size: 12px;
-            line-height: 1.55;
-        }
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 
-        /* Footer */
-        .footer {
-            padding-top: 27px;
-            text-align: center;
+    padding: 8px 13px;
 
-            color: #666671;
-            font-size: 11px;
-            line-height: 1.6;
-        }
+    border-radius: 50px;
 
-        /* Toast */
-        .toast {
-            position: fixed;
+    font-size: 12px;
+    font-weight: 600;
 
-            left: 50%;
-            bottom: 25px;
+    color: #baffdf;
 
-            transform:
-                translate(-50%, 20px);
+    background: rgba(0,229,139,0.09);
 
-            padding: 11px 17px;
+    border: 1px solid rgba(0,229,139,0.15);
+}
 
-            border-radius: 50px;
+.status-dot {
+    width: 7px;
+    height: 7px;
 
-            color: #ffffff;
-            background: rgba(30,30,38,0.95);
+    border-radius: 50%;
 
-            border: 1px solid rgba(255,255,255,0.10);
+    background: #00e58b;
 
-            font-size: 12px;
-            font-weight: 700;
+    box-shadow:
+        0 0 10px rgba(0,229,139,0.8);
+}
 
-            opacity: 0;
-            pointer-events: none;
+h1 {
+    margin-top: 18px;
 
-            transition:
-                opacity 0.25s ease,
-                transform 0.25s ease;
+    font-size: clamp(28px, 8vw, 38px);
 
-            z-index: 100;
-            white-space: nowrap;
-        }
+    line-height: 1.1;
 
-        .toast.show {
-            opacity: 1;
+    letter-spacing: -1.3px;
+}
 
-            transform:
-                translate(-50%, 0);
-        }
+.subtitle {
+    margin: 13px auto 0;
 
-        @media (min-width: 600px) {
-            .viewport {
-                padding: 30px;
-            }
+    max-width: 390px;
 
-            .support-card {
-                padding: 42px 35px 32px;
-            }
+    color: #a6a6b3;
 
-            .info-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-    </style>
+    font-size: 15px;
+
+    line-height: 1.65;
+}
+
+/* Divider */
+.divider {
+    height: 1px;
+
+    margin: 28px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.12),
+            transparent
+        );
+}
+
+/* Number box */
+.support-box {
+    padding: 22px;
+
+    border-radius: 22px;
+
+    background: rgba(255,255,255,0.035);
+
+    border: 1px solid rgba(255,255,255,0.075);
+}
+
+.label {
+    margin-bottom: 12px;
+
+    color: #8f8f9c;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.1px;
+}
+
+/* Number row */
+.number-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+/* Phone number */
+.phone-number {
+    flex: 1;
+
+    color: #fff;
+
+    font-size: clamp(20px, 6vw, 27px);
+
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    cursor: pointer;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    transition: opacity 0.2s ease;
+}
+
+.phone-number:active {
+    opacity: 0.55;
+}
+
+/* Copy button */
+.copy-button {
+    flex-shrink: 0;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255,255,255,0.10);
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,0.055);
+
+    color: #fff;
+
+    cursor: pointer;
+
+    font-size: 19px;
+
+    transition:
+        transform 0.18s ease,
+        background 0.18s ease;
+}
+
+.copy-button:active {
+    transform: scale(0.92);
+}
+
+.copy-button.copied {
+    background: rgba(0,229,139,0.13);
+
+    border-color:
+        rgba(0,229,139,0.25);
+}
+
+/* Instruction */
+.instruction {
+    margin-top: 14px;
+
+    color: #858591;
+
+    font-size: 12px;
+
+    line-height: 1.55;
+}
+
+.copy-message {
+    min-height: 18px;
+
+    margin-top: 8px;
+
+    color: #00e58b;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+/* Information cards */
+.info-grid {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 11px;
+
+    margin-top: 18px;
+}
+
+.info-item {
+    padding: 16px;
+
+    border-radius: 18px;
+
+    background: rgba(255,255,255,0.025);
+
+    border: 1px solid rgba(255,255,255,0.055);
+}
+
+.info-title {
+    margin-bottom: 5px;
+
+    color: #fff;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.info-text {
+    color: #858591;
+
+    font-size: 12px;
+
+    line-height: 1.55;
+}
+
+/* Footer */
+.footer {
+    padding-top: 27px;
+
+    text-align: center;
+
+    color: #666671;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+
+    left: 50%;
+    bottom: 25px;
+
+    transform:
+        translate(-50%, 20px);
+
+    padding: 11px 17px;
+
+    border-radius: 50px;
+
+    color: #fff;
+
+    background: rgba(30,30,38,0.95);
+
+    border: 1px solid rgba(255,255,255,0.10);
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+
+    z-index: 100;
+
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+
+    transform:
+        translate(-50%, 0);
+}
+
+/* Desktop */
+@media (min-width: 600px) {
+
+    .viewport {
+        padding: 30px;
+    }
+
+    .support-card {
+        padding: 42px 35px 32px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+</style>
 </head>
+
 
 <body>
 
-    <div class="background">
-        <div class="glow one"></div>
-        <div class="glow two"></div>
-    </div>
+<!-- Background -->
+<div class="background">
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+</div>
 
-    <main class="viewport">
 
-        <div class="scroll-area">
+<!-- Main viewport -->
+<main class="viewport">
 
-            <section class="support-card">
+    <!-- Only this area scrolls -->
+    <div class="scroll-area">
 
-                <div class="top">
+        <section class="support-card">
 
-                    <div class="support-icon">
-                        💬
-                    </div>
+            <!-- Header -->
+            <div class="top">
 
-                    <div class="status">
-                        <span class="status-dot"></span>
-                        Support is available
-                    </div>
+                <div class="support-icon">
+                    💬
+                </div>
 
-                    <h1>
-                        How can we help?
-                    </h1>
+                <div class="status">
+                    <span class="status-dot"></span>
+                    Support is available
+                </div>
 
-                    <p class="subtitle">
-                        Need assistance? Contact our support team directly
-                        through WhatsApp and we'll be happy to help.
-                    </p>
+                <h1>
+                    How can we help?
+                </h1>
 
+                <p class="subtitle">
+                    Need assistance? Our support team is ready to help.
+                    Contact us directly through WhatsApp.
+                </p>
+
+            </div>
+
+
+            <div class="divider"></div>
+
+
+            <!-- Phone number -->
+            <div class="support-box">
+
+                <div class="label">
+                    WhatsApp Support Number
                 </div>
 
 
-                <div class="divider"></div>
+                <div class="number-row">
 
-
-                <div class="support-box">
-
-                    <div class="label">
-                        WhatsApp Support
-                    </div>
-
-                    <div class="number-row">
-
-                        <!-- Tap the number to copy -->
-                        <div
-                            class="phone-number"
-                            id="phoneNumber"
-                            onclick="copyNumber()"
-                            title="Tap to copy"
-                        >
-                            +44 7882 775233
-                        </div>
-
-                        <!-- Copy button -->
-                        <button
-                            class="copy-button"
-                            id="copyButton"
-                            onclick="copyNumber()"
-                            aria-label="Copy phone number"
-                        >
-                            ⧉
-                        </button>
-
-                    </div>
-
+                    <!-- Tap number to copy -->
                     <div
-                        class="copy-message"
-                        id="copyMessage"
-                    ></div>
-
-
-                    <!-- Chat with the copied number -->
-                    <a
-                        href="#"
-                        class="whatsapp-link"
-                        onclick="openWhatsApp(); return false;"
+                        class="phone-number"
+                        onclick="copyNumber()"
                     >
-                        <span class="whatsapp-icon">
-                            ✓
-                        </span>
+                        +44 7882 775233
+                    </div>
 
-                        Chat with this number on WhatsApp
-                    </a>
+
+                    <!-- Copy button -->
+                    <button
+                        class="copy-button"
+                        id="copyButton"
+                        onclick="copyNumber()"
+                        aria-label="Copy number"
+                    >
+                        ⧉
+                    </button>
 
                 </div>
 
 
-                <div class="info-grid">
+                <div
+                    class="copy-message"
+                    id="copyMessage"
+                ></div>
 
-                    <div class="info-item">
 
-                        <div class="info-title">
-                            💬 Direct Support
-                        </div>
+                <p class="instruction">
+                    Tap the number or the copy icon to copy it.
+                    Then open WhatsApp and start a chat with this number.
+                </p>
 
-                        <div class="info-text">
-                            Chat directly with our support team through
-                            WhatsApp.
-                        </div>
+            </div>
 
+
+            <!-- Information -->
+            <div class="info-grid">
+
+                <div class="info-item">
+
+                    <div class="info-title">
+                        💬 Direct Support
                     </div>
 
-
-                    <div class="info-item">
-
-                        <div class="info-title">
-                            ⚡ Quick Assistance
-                        </div>
-
-                        <div class="info-text">
-                            Send us your issue and our team will assist
-                            you as soon as possible.
-                        </div>
-
-                    </div>
-
-
-                    <div class="info-item">
-
-                        <div class="info-title">
-                            📱 Easy Contact
-                        </div>
-
-                        <div class="info-text">
-                            Tap the phone number anytime to copy it to
-                            your clipboard.
-                        </div>
-
-                    </div>
-
-
-                    <div class="info-item">
-
-                        <div class="info-title">
-                            🔒 Secure Chat
-                        </div>
-
-                        <div class="info-text">
-                            Your support conversation takes place directly
-                            through WhatsApp.
-                        </div>
-
+                    <div class="info-text">
+                        Contact our support team directly through
+                        WhatsApp for assistance.
                     </div>
 
                 </div>
 
 
-                <div class="footer">
-                    We're here to help you get the most out of the app.
-                    <br>
-                    Support Team
+                <div class="info-item">
+
+                    <div class="info-title">
+                        ⚡ Quick Assistance
+                    </div>
+
+                    <div class="info-text">
+                        Copy the number and send us a message
+                        describing the issue you're experiencing.
+                    </div>
+
                 </div>
 
-            </section>
 
-        </div>
+                <div class="info-item">
 
-    </main>
+                    <div class="info-title">
+                        📋 Copy Easily
+                    </div>
+
+                    <div class="info-text">
+                        Simply tap the phone number or the copy
+                        icon beside it.
+                    </div>
+
+                </div>
 
 
-    <!-- Copy confirmation -->
-    <div
-        class="toast"
-        id="toast"
-    >
-        Number copied
+                <div class="info-item">
+
+                    <div class="info-title">
+                        📱 WhatsApp
+                    </div>
+
+                    <div class="info-text">
+                        After copying the number, open WhatsApp
+                        and start a new chat using the copied number.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Footer -->
+            <div class="footer">
+
+                We're here to help you get the most out of the app.
+
+                <br>
+
+                Support Team
+
+            </div>
+
+        </section>
+
     </div>
 
-
-    <script>
-
-        const phoneNumber = "447882775233";
+</main>
 
 
-        /*
-         * COPY NUMBER
-         *
-         * Works with modern Android WebViews and
-         * includes a fallback for older WebViews.
-         */
-        function copyNumber() {
-
-            const displayNumber = "+44 7882 775233";
-
-            if (
-                navigator.clipboard &&
-                navigator.clipboard.writeText
-            ) {
-
-                navigator.clipboard
-                    .writeText(displayNumber)
-                    .then(showCopied)
-                    .catch(function () {
-                        fallbackCopy(displayNumber);
-                    });
-
-            } else {
-
-                fallbackCopy(displayNumber);
-
-            }
-        }
+<!-- Copy notification -->
+<div
+    class="toast"
+    id="toast"
+>
+    Number copied
+</div>
 
 
-        function fallbackCopy(text) {
+<script>
 
-            const textarea = document.createElement("textarea");
-
-            textarea.value = text;
-
-            textarea.style.position = "fixed";
-            textarea.style.left = "-9999px";
-            textarea.style.top = "0";
-
-            document.body.appendChild(textarea);
-
-            textarea.focus();
-            textarea.select();
-
-            try {
-                document.execCommand("copy");
-            } catch (e) {
-                console.log("Copy failed:", e);
-            }
-
-            document.body.removeChild(textarea);
-
-            showCopied();
-        }
+/*
+ * PHONE NUMBER
+ */
+const supportNumber = "+44 7882 775233";
 
 
-        function showCopied() {
+/*
+ * COPY NUMBER
+ *
+ * Supports modern Android WebView
+ * and older WebView fallback.
+ */
+function copyNumber() {
 
-            const button =
-                document.getElementById("copyButton");
+    if (
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ) {
 
-            const message =
-                document.getElementById("copyMessage");
+        navigator.clipboard
+            .writeText(supportNumber)
+            .then(function () {
 
-            button.classList.add("copied");
+                showCopied();
 
-            button.innerHTML = "✓";
+            })
+            .catch(function () {
 
-            message.innerHTML =
-                "Number copied to clipboard";
+                fallbackCopy();
 
-            showToast("Number copied");
+            });
 
+    } else {
 
-            setTimeout(function () {
+        fallbackCopy();
 
-                button.classList.remove("copied");
-
-                button.innerHTML = "⧉";
-
-                message.innerHTML = "";
-
-            }, 1800);
-        }
-
-
-        function showToast(text) {
-
-            const toast =
-                document.getElementById("toast");
-
-            toast.innerHTML = text;
-
-            toast.classList.add("show");
+    }
+}
 
 
-            setTimeout(function () {
+/*
+ * FALLBACK COPY
+ */
+function fallbackCopy() {
 
-                toast.classList.remove("show");
+    const textarea =
+        document.createElement("textarea");
 
-            }, 1800);
-        }
+    textarea.value = supportNumber;
 
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    textarea.style.top = "0";
 
-        /*
-         * OPEN WHATSAPP
-         *
-         * If the Android app provides the JavaScript bridge,
-         * it will ask Android to launch the native WhatsApp app.
-         *
-         * Otherwise it falls back to wa.me.
-         */
-        function openWhatsApp() {
+    document.body.appendChild(textarea);
 
-            const message =
-                "Hello Support, I need help with the app.";
+    textarea.focus();
+    textarea.select();
 
+    try {
 
-            /*
-             * Android WebView bridge
-             */
-            if (
-                typeof Android !== "undefined" &&
-                typeof Android.openWhatsApp === "function"
-            ) {
+        document.execCommand("copy");
 
-                Android.openWhatsApp();
+    } catch (error) {
 
-                return;
-            }
+        console.log(
+            "Copy failed:",
+            error
+        );
 
+    }
 
-            /*
-             * Normal browser/WebView fallback
-             */
-            const url =
-                "https://wa.me/" +
-                phoneNumber +
-                "?text=" +
-                encodeURIComponent(message);
+    document.body.removeChild(textarea);
+
+    showCopied();
+}
 
 
-            window.location.href = url;
-        }
+/*
+ * SHOW COPIED STATE
+ */
+function showCopied() {
 
-    </script>
+    const button =
+        document.getElementById(
+            "copyButton"
+        );
+
+    const message =
+        document.getElementById(
+            "copyMessage"
+        );
+
+
+    button.classList.add("copied");
+
+    button.innerHTML = "✓";
+
+
+    message.innerHTML =
+        "Number copied to clipboard";
+
+
+    showToast("Number copied");
+
+
+    setTimeout(function () {
+
+        button.classList.remove(
+            "copied"
+        );
+
+        button.innerHTML = "⧉";
+
+        message.innerHTML = "";
+
+    }, 1800);
+}
+
+
+/*
+ * TOAST
+ */
+function showToast(text) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+    toast.innerHTML = text;
+
+    toast.classList.add("show");
+
+
+    setTimeout(function () {
+
+        toast.classList.remove(
+            "show"
+        );
+
+    }, 1800);
+}
+
+</script>
 
 </body>
 </html>
